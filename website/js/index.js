@@ -1,21 +1,20 @@
-$(".imgAdd").click(function(){
-  $(this).closest(".row").find('.imgAdd').before('<div class="imgUp"><div class="imagePreview"></div><label class="btn btn-primary">Upload<input type="file" class="uploadFile img" value="Upload Photo" style="width: 0px;height: 0px;overflow: hidden;"></label></div>');
-});
-$(function() {
-    $(document).on("change",".uploadFile", function()
-    {
-    		var uploadFile = $(this);
-        var files = !!this.files ? this.files : [];
-        if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
- 
-        if (/^image/.test( files[0].type)){ // only image file
-            var reader = new FileReader(); // instance of the FileReader
-            reader.readAsDataURL(files[0]); // read the local file
- 
-            reader.onloadend = function(){ // set image data as background of div
-                //alert(uploadFile.closest(".upimage").find('.imagePreview').length);
-uploadFile.closest(".imgUp").find('.imagePreview').css("background-image", "url("+this.result+")");
-            }
-        }
-    });
-});
+const fileInput = document.getElementById('file-input');
+document.getElementsByTagName("h1")[0].innerHTML = "main";
+fileInput.addEventListener('change', (e) => displayImage(e.target.files));
+
+function displayImage(fileList) {
+  document.getElementsByTagName("h1")[0].innerHTML = "attempting to display";
+  let file = null;
+
+  for(let i = 0; i < fileList.length; i++) {
+    //looking for image type in file list
+    if(fileList[i].type.match(/^image\//)) {
+      file = fileList[i];
+      break;
+    }
+  }
+
+  if(file !== null) {
+    document.getElementById('image-location').style.backgroundImage = "url(" + URL.createObjectURL(file) + ")";
+  }
+}

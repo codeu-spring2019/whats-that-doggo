@@ -1,9 +1,7 @@
 const fileInput = document.getElementById('file-input');
-document.getElementsByTagName("h1")[0].innerHTML = "main";
 fileInput.addEventListener('change', (e) => displayImage(e.target.files));
 
 function displayImage(fileList) {
-  document.getElementsByTagName("h1")[0].innerHTML = "attempting to display";
   let file = null;
 
   for(let i = 0; i < fileList.length; i++) {

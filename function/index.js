@@ -21,7 +21,8 @@ exports.predictImage = (req, res) => {
   // 3. Return the Auto ML label / score back in the response via res.send
   
   // https://cloud.google.com/nodejs/docs/reference/automl/0.1.x/v1beta1.PredictionServiceClient#predict
-  const formattedName = client.modelPath('[PROJECT]', '[LOCATION]', '[MODEL]');
+  //Project = , Location = gs://sp19-codeu-35-7727-vcm/dog_dataset_two, Model = dog_dataset_two
+  const formattedName = client.modelPath('sp19-codeu-35-7727', 'gs://sp19-codeu-35-7727-vcm/dog_dataset_two', 'dog_dataset_two');
   const payload = {};
   const request = {
     name: formattedName,

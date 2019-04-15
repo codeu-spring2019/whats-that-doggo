@@ -14,6 +14,16 @@ const client = new automl.PredictionServiceClient();
  */
 
 @@ -19,14 +19,29 @@ exports.predictImage = (req, res) => {
+    if (req.method === "OPTIONS") {
+          res.set("Access-Control-Allow-Origin", "*")
+          res.set("Access-Control-Allow-Headers", "Accept, Accept-Language, Content-Language, Content-Type")
+          res.status(200).send()
+        }
+
+      	if (req.method !== "POST") {
+          res.status(405).send()
+        }
+}
 
   try {
   // TODO:
@@ -57,7 +67,6 @@ const client = new automl.PredictionServiceClient();
   
   } catch (e) {
     // Handle errors explicitly
-    res.set("Access-Control-Allow-Origin", "*")
     res.status(500).json({"error": err)
   }
 };

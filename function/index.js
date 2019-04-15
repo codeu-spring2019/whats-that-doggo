@@ -12,7 +12,8 @@ const client = new automl.PredictionServiceClient();
  * @param {Object} res Cloud Function response context.
  *                     More info: https://expressjs.com/en/api.html#res
  */
-exports.predictImage = (req, res) => {
+
+@@ -19,14 +19,29 @@ exports.predictImage = (req, res) => {
 
   try {
   // TODO:
@@ -29,16 +30,16 @@ exports.predictImage = (req, res) => {
   const formattedName = client.modelPath('sp19-codeu-35-7727', 'gs://sp19-codeu-35-7727-vcm/dog_dataset_two', 'dog_dataset_two');
   const payload = {};
 
-  const params = {};
-  if (scoreThreshold) {
-    params.score_threshold = scoreThreshold;
-  }
+  //const params = {};
+  //if (scoreThreshold) {
+    //params.score_threshold = scoreThreshold;
+  //}
 
   payload.image = {imageBytes: content};
   const request = {
     name: formattedName,
     payload: payload,
-    params: params,
+    //params: params,
   };
 
   
@@ -51,7 +52,7 @@ exports.predictImage = (req, res) => {
     score: prediction.score,
   }
   
-  res.status(200).json(result).send(result.score);
+  res.status(200).json(result);
   
   } catch (e) {
     // Handle errors explicitly

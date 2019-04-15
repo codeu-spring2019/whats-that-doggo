@@ -52,10 +52,12 @@ const client = new automl.PredictionServiceClient();
     score: prediction.score,
   }
   
+  res.set("Access-Control-Allow-Origin", "*")
   res.status(200).json(result);
   
   } catch (e) {
     // Handle errors explicitly
+    res.set("Access-Control-Allow-Origin", "*")
     res.status(500).json({"error": err)
   }
 };

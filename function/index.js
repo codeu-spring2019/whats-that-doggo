@@ -15,6 +15,17 @@ const client = new automl.PredictionServiceClient();
 
 @@ -19,14 +19,29 @@ exports.predictImage = (req, res) => {
 
+    if (req.method === "OPTIONS") {
+          res.set("Access-Control-Allow-Origin", "*")
+          res.set("Access-Control-Allow-Headers", "Accept, Accept-Language, Content-Language, Content-Type")
+          res.status(200).send()
+        }
+
+      	if (req.method !== "POST") {
+          res.status(405).send()
+        }
+}
+
   try {
   // TODO:
   // 1. Take image from request (req) and POST to Auto ML predict API
@@ -25,7 +36,7 @@ const client = new automl.PredictionServiceClient();
   const modelId = “ICN12345”;
   const filePath = "gs://sp19-codeu-35-7727-vcm/dog_dataset_two/";
   const scoreThreshold = 0.5;
-  
+
   // https://cloud.google.com/nodejs/docs/reference/automl/0.1.x/v1beta1.PredictionServiceClient#predict
   const formattedName = client.modelPath('sp19-codeu-35-7727', 'gs://sp19-codeu-35-7727-vcm/dog_dataset_two', 'dog_dataset_two');
   const payload = {};
@@ -43,7 +54,6 @@ const client = new automl.PredictionServiceClient();
   };
 
   
-  
   let prediction = await client.predict(request)
   
   // TODO: unpack https://cloud.google.com/nodejs/docs/reference/automl/0.1.x/google.cloud.automl.v1beta1#.PredictResponse
@@ -52,6 +62,7 @@ const client = new automl.PredictionServiceClient();
     score: prediction.score,
   }
   
+  res.set("Access-Control-Allow-Origin", "*")
   res.status(200).json(result);
   
   } catch (e) {

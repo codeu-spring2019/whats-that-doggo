@@ -3,7 +3,7 @@
 */
 
 
-var url = 'https://us-central1-predict.sp19-codeu-35-7727.cloudfunctions.net/predict';
+var url = 'https://us-central1-sp19-codeu-35-7727.cloudfunctions.net/predict';
 var data = { } //An array within the displayImage implementation
 
 fetch(url, {

@@ -2,6 +2,12 @@
    "https://YOUR_REGION-YOUR_PROJECT_ID.cloudfunctions.net/FUNCTION_NAME"
 */
 
+//HTML that saves the breed and score from the returned JSON body
+<div id="prediction-results" style="display: none">
+<span class="label">Breed: </span><span id="dog-breed" class="score"></span> //Can access with getElementById
+<span class="label">Confidence: </span><span id="prediction-score" class="score"></span> //Can access with getElementById
+</div>
+
 
 
 
@@ -13,8 +19,6 @@ if (!data.type.match("image/*") {
     throw new Error("data is not of the type image");
 }
 
-//Handling the JSON body returned
-var myList = document.querySelector('ul'); //Will contain dog breed on one line and score one the next
 
 fetch(url, {
   method: 'POST', // or 'PUT'
@@ -30,13 +34,18 @@ fetch(url, {
       return response.json();
     })
     .then(function(json) {
-      var breed = document.createElement('li');
-      breed.innerHTML = "Breed: " + response.label;
-      myList.appendChild(breed);
+      //Get the breed (which is stored in the response's label)
+      let breedElement = document.getElementById("dog-breed");
+      breedElement.innerText = response.label;
 
-      var score = document.createElement('li');
-      score.innerHTML = "Score: " + response.score;
-      myList.appendChild(score);
+      //Get the image's confidence score (store in the response's score)
+      let scoreElement = document.getElementById("prediction-score");
+      scoreElement.innerText = response.score
+
+      let resultDiv = document.getElementById("prediction-results")
+      resultDiv.style.display = "Breed: " + resultDiv.getElementById("dog-breed") + ", Score: " + getElementById("prediction-score");
+
+
     })
     .catch(function(error) {
       var p = document.createElement('p');

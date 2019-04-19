@@ -7,19 +7,6 @@ var url = 'https://us-central1-sp19-codeu-35-7727.cloudfunctions.net/predict';
 var data = { } //An array within the displayImage implementation
 
 
-//Just prints the raw JSON data to the console
-fetch(url, {
-  method: 'POST', // or 'PUT'
-  body: data, // data can be `string` or {object}!
-  headers:{
-    'Content-Type': 'application/json'
-  }
-}).then(res => res.json())
-.then(response => console.log(JSON.stringify(response))) //Should return the image's predicted label (aka the breed) and the score
-.catch(error => console.error('Error:', error));
-
-
-
 //Handling the JSON body returned
 var myList = document.querySelector('ul'); //Will contain dog breed on one line and score one the next
 

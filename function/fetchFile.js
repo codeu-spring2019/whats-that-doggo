@@ -3,16 +3,22 @@
 */
 
 
+
+
+//Javascript
 var url = 'https://us-central1-sp19-codeu-35-7727.cloudfunctions.net/predict';
 var data = { } //An array within the displayImage implementation
 
+if (!data.type.match("image/*") {
+    throw new Error("data is not of the type image");
+}
 
 //Handling the JSON body returned
 var myList = document.querySelector('ul'); //Will contain dog breed on one line and score one the next
 
 fetch(url, {
   method: 'POST', // or 'PUT'
-  body: data, // data can be `string` or {object}!
+  body: data.type.match, // data can be `string` or {object}!
   headers:{
     'Content-Type': 'application/json'
   }

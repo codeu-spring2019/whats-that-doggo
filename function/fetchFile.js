@@ -8,7 +8,10 @@
 <span class="label">Confidence: </span><span id="prediction-score" class="score"></span> //Can access with getElementById
 </div>
 
-
+//HTML for the error message
+<div id="prediction-error" style="display: none">
+<span class="p">ErrorMessage: </span><span id="error-message" class="score"></span> //Can access with getElementById
+</div>
 
 
 //Javascript
@@ -48,11 +51,11 @@ fetch(url, {
 
     })
     .catch(function(error) {
-      var p = document.createElement('p');
-      p.appendChild(
-        document.createTextNode('Error: ' + error.message)
-      );
-      document.body.insertBefore(p, myList);
+      let error_message = document.getElementById("error-message");
+      error_message.innerText = "Error: " + error.message;
+
+      let errorDiv = document.getElementById("prediction-error");
+      errorDiv.style.display = errorDiviv.getElementById("error-message");
     });
 
 

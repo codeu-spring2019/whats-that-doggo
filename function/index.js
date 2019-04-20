@@ -1,6 +1,13 @@
-const automl = require('@google-cloud/automl');
-const client = new automl.PredictionServiceClient();
+const automl = require("@google-cloud/automl")
+const Busboy = require("busboy")
+const client = new automl.PredictionServiceClient()
 
+// Project-level settings.
+const projectId = process.env.GCP_PROJECT || "sp19-codeu-35-7727"
+const computeRegion = "us-central1"
+const modelId = process.env.MODEL_ID || "ICN5266026881461832483"
+const scoreThreshold = process.env.SCORE_THRESHOLD || 0.5
+const modelFullId = client.modelPath(projectId, computeRegion, modelId)
 
 /**
  * HTTP Cloud Function.
@@ -12,61 +19,110 @@ const client = new automl.PredictionServiceClient();
  * @param {Object} res Cloud Function response context.
  *                     More info: https://expressjs.com/en/api.html#res
  */
-
-@@ -19,14 +19,29 @@ exports.predictImage = (req, res) => {
-    if (req.method === "OPTIONS") {
-          res.set("Access-Control-Allow-Origin", "*")
-          res.set("Access-Control-Allow-Headers", "Accept, Accept-Language, Content-Language, Content-Type")
-          res.status(200).send()
-        }
-
-      	if (req.method !== "POST") {
-          res.status(405).send()
-        }
-}
-
+exports.predict = (req, res, next) => {
   try {
-  // TODO:
-  // 1. Take image from request (req) and POST to Auto ML predict API
-  // 2. Handle errors - e.g. the image couldn't be predicted? No label returned?
-  // 3. Return the Auto ML label / score back in the response via res.send
-  const projectId = "sp19-codeu-35-7727";
-  const computeRegion = "us_central1";
-  const modelId = “ICN12345”;
-  const filePath = "gs://sp19-codeu-35-7727-vcm/dog_dataset_two/";
-  const scoreThreshold = 0.5;
+    if (req.method === "OPTIONS") {
+      res.set("Access-Control-Allow-Origin", "*")
+      res.set(
+        "Access-Control-Allow-Headers",
+        "Accept, Accept-Language, Content-Language, Content-Type"
+      )
+      res
+        .status(200)
+        .send()
+        .end()
+      return
+    }
 
-  // https://cloud.google.com/nodejs/docs/reference/automl/0.1.x/v1beta1.PredictionServiceClient#predict
-  const formattedName = client.modelPath('sp19-codeu-35-7727', 'gs://sp19-codeu-35-7727-vcm/dog_dataset_two', 'dog_dataset_two');
-  const payload = {};
+    if (req.method !== "POST") {
+      res
+        .status(405)
+        .send()
+        .end()
+      return
+    }
 
-  //const params = {};
-  //if (scoreThreshold) {
-    //params.score_threshold = scoreThreshold;
-  //}
+    let busboy = new Busboy({
+      headers: req.headers,
+      limits: {
+        fileSize: 1024 * 1024 * 1024 * 10, // 10MB,
+        files: 1
+      }
+    })
 
-  payload.image = {imageBytes: content};
-  const request = {
-    name: formattedName,
-    payload: payload,
-    //params: params,
-  };
+    let imageUpload
 
+    // Handle the image upload
+    // 1. Validate the MIME type (is it an image?)
+    // 2. Check the length (is it too large)
+    // 3. Prepare it for prediction
+    busboy.on("file", (fieldname, file, filename, enc, mimeType) => {
+      console.log(`received file: ${fieldname}=${filename}`)
+      file.on("data", function(data) {
+        console.log("File [" + fieldname + "] got " + data.length + " bytes")
+      })
+      file.on("end", function() {
+        console.log("File [" + fieldname + "] Finished")
+      })
 
-  
-  let prediction = await client.predict(request)
-  
-  // TODO: unpack https://cloud.google.com/nodejs/docs/reference/automl/0.1.x/google.cloud.automl.v1beta1#.PredictResponse
-  let result = {
-    label: prediction.label,
-    score: prediction.score,
-  }
-  
-  res.set("Access-Control-Allow-Origin", "*")
-  res.status(200).json(result);
-  
-  } catch (e) {
+      imageUpload = file
+    })
+
+    busboy.on("finish", () => {
+      console.log("upload complete")
+    })
+
+    req.pipe(busboy)
+
+    // After upload finishes
+    let params = {}
+    if (scoreThreshold) {
+      params.score_threshold = scoreThreshold
+    }
+
+    let payload = {
+      image: { imageBytes: imageUpload }
+    }
+
+    let prediction
+    console.log(`using model at: ${modelFullId}`)
+    client
+      .predict({
+        name: modelFullId,
+        payload: payload,
+        params: params
+      })
+      .catch(err => {
+        throw new Error(err)
+      })
+      .then(res => {
+        prediction = res
+      })
+      .catch(err => {
+        throw new Error(err)
+      })
+
+    // Docs: https://cloud.google.com/nodejs/docs/reference/automl/0.1.x/google.cloud.automl.v1beta1#.PredictResponse
+    console.log(prediction.payload[0])
+    let result = {
+      label: prediction.payload[0].displayName,
+      score: prediction.payload[0].classification.score
+    }
+
+    res.set("Access-Control-Allow-Origin", "*")
+    res
+      .status(200)
+      .json(result)
+      .end()
+    return
+  } catch (err) {
     // Handle errors explicitly
-    res.status(500).json({"error": err)
+    let errMsg = `fatal: ${JSON.stringify(err)}`
+    console.log(errMsg)
+    res
+      .status(500)
+      .json({ error: errMsg })
+      .end()
+    return
   }
-};
+}

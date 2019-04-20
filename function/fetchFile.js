@@ -15,17 +15,25 @@
 
 
 //Javascript
-var url = 'https://us-central1-sp19-codeu-35-7727.cloudfunctions.net/testPredict';
+var url = 'https://us-central1-sp19-codeu-35-7727.cloudfunctions.net/testPredict'; //Currently using the temp Predict function
 var data = { } //An array within the displayImage implementation
 
 if (!data.type.match("image/*") {
     throw new Error("data is not of the type image");
 }
 
+//base64 encode the image before upload to the AutoML API
+// Read the file into memory.
+var fs = require('fs');
+var imageFile = fs.readFileSync(data);
+
+// Convert the image data to a Buffer and base64 encode it.
+var encoded = Buffer.from(imageFile).toString('base64');
+
 
 fetch(url, {
   method: 'POST', // or 'PUT'
-  body: data.type.match, // data can be `string` or {object}!
+  body: encoded, // data can be `string` or {object}!
   headers:{
     'Content-Type': 'application/json'
   }

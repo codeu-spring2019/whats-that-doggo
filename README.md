@@ -35,6 +35,128 @@ If the model doesn't recognize the breed, you'll see the below:
 
 The 120 breeds (classes) are below:
 
+- Afghan hound
+- African hunting dog
+- Airedale
+- American Staffordshire terrier
+- Appenzeller
+- Australian terrier
+- Bedlington terrier
+- Bernese mountain dog
+- Blenheim spaniel
+- Border collie
+- Border terrier
+- Boston bull
+- Bouvier des Flandres
+- Brabancon griffon
+- Brittany spaniel
+- Cardigan
+- Chesapeake Bay retriever
+- Chihuahua
+- Dandie Dinmont
+- Doberman
+- English foxhound
+- English setter
+- English springer
+- EntleBucher
+- Eskimo dog
+- French bulldog
+- French bulldog
+- German shepherd
+- German short
+- Gordon setter
+- Great Dane
+- Great Pyrenees
+- Greater Swiss Mountain dog
+- Ibizan hound
+- Irish setter
+- Irish terrier
+- Irish water spaniel
+- Irish wolfhound
+- Italian greyhound
+- Japanese spaniel
+- Kerry blue terrier
+- Labrador retriever
+- Lakeland terrier
+- Leonberg
+- Lhasa
+- Maltese dog
+- Mexican hairless
+- Newfoundland
+- Norfolk terrier
+- Norwegian elkhound
+- Norwich terrier
+- Old English sheepdog
+- Pekinese
+- Pembroke
+- Pomeranian
+- Rhodesian ridgeback
+- Rottweiler
+- Saint Bernard
+- Saluki
+- Samoyed
+- Scotch terrier
+- Scottish deerhound
+- Sealyham terrier
+- Shetland sheepdog
+- Shih
+- Siberian husky
+- Staffordshire bullterrier
+- Sussex spaniel
+- Tibetan mastiff
+- Tibetan terrier
+- Walker hound
+- Weimaraner
+- Welsh springer spaniel
+- West Highland white terrier
+- Yorkshire terrier
+- Affenpinscher
+- Basenji
+- Basset
+- Beagle
+- Black
+- Bloodhound
+- Bluetick
+- Borzoi
+- Boxer
+- Briard
+- Bull mastiff
+- Cairn
+- Chow
+- Clumber
+- Cocker spaniel
+- Collie
+- Curly
+- Dhole
+- Dingo
+- Flat
+- Giant schnauzer
+- Golden retriever
+- Groenendael
+- Keeshond
+- Kelpie
+- Komondor
+- Kuvasz
+- Malamute
+- Malinois
+- Miniature pinscher
+- Miniature poodle
+- Miniature schnauzer
+- Otterhound
+- Papillon
+- Pug
+- Redbone
+- Schipperke
+- Silky terrier
+- Soft
+- Standard poodle
+- Standard schnauzer
+- Toy poodle
+- Toy terrier
+- Vizsla
+- Whippet
+- Wire
+
 ## Technology
 
 The project has three major components:

@@ -42,9 +42,9 @@ function makePrediction(file,url) {
     //Calls fetch on the uploaded image
     fetch(url, {
       method: 'POST',
-      body: file, // data can be `string` or {object}!
-      headers:{
-        'Content-Type': 'application/json'
+      body: file,
+      headers:{ //Get the content type of the image itself
+        'Content-Type': type(file)
       }
     })
     .then(function(response) { //Path #1 from fetch call

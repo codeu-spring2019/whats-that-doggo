@@ -46,6 +46,7 @@ function makePrediction(file,url) {
       headers:{
         'Content-Type': 'application/json'
       }
+      return response;
     })
     .then(function(response) { //Path #1 from fetch call
           let data = response.json();

@@ -111,19 +111,17 @@ function predictImage(req, res, image) {
         payload: payload,
         params: params
       })
-      .catch(err => {
-        console.log(err)
-        res
-          .status(500)
-          .json({ error: err })
-          .end()
-        return
-      })
       .then(prediction => {
         console.log("prediction response returned")
         // Docs: https://cloud.google.com/nodejs/docs/reference/automl/0.1.x/google.cloud.automl.v1beta1#.PredictResponse
         // Get only the first prediction response
         let data = prediction[0]["payload"]
+
+        if (!data[0]) {
+          throw new Error(
+            "Unable to make a prediction for that image: it might be a breed we don't recognize yet!"
+          )
+        }
 
         // Build our response object
         let result = {
@@ -142,7 +140,7 @@ function predictImage(req, res, image) {
         console.log(err)
         res
           .status(500)
-          .json({ error: err })
+          .json({ error: err.toString() })
           .end()
         return
       })
@@ -151,7 +149,7 @@ function predictImage(req, res, image) {
     console.log(err)
     res
       .status(500)
-      .json({ error: err })
+      .json({ error: err.toString() })
       .end()
     return
   }

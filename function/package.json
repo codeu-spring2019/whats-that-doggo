@@ -1,0 +1,13 @@
+{
+  "name": "predict",
+  "version": "1.0.0",
+  "description": "A Node.js function for predicting against AutoML.",
+  "main": "index.js",
+  "repository": "https://github.com/codeu-spring2019/whats-that-doggo",
+  "author": "CodeU Team 35",
+  "license": "MIT",
+  "dependencies": {
+    "@google-cloud/automl": "^0.2.0",
+    "busboy": "^0.3.1"
+  }
+}

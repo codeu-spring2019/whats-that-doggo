@@ -1,24 +1,3 @@
-/* Form of a Google Cloud Function URL (https://cloud.google.com/functions/docs/calling/http)
-   "https://YOUR_REGION-YOUR_PROJECT_ID.cloudfunctions.net/FUNCTION_NAME"
-*/
-
-//HTML that saves the breed and score from the returned JSON body
-<div id="prediction-results" style="display: none">
-<span class="label">Breed: </span><span id="dog-breed" class="score"></span> //Can access with getElementById
-<span class="label">Confidence: </span><span id="prediction-score" class="score"></span> //Can access with getElementById
-</div>
-
-//HTML for the error message
-<div id="prediction-error" style="display: none">
-<span class="p">ErrorMessage: </span><span id="error-message" class="score"></span> //Can access with getElementById
-</div>
-
-//HTML input element with an accept filter that indicates you only want image files
-//Didn't use capture attribute since the user can decide which type of image they want to upload
-<input type="file" accept = "image/*" id = "file-input">
-
-
-
 //Javascript
 <script>
 
@@ -35,7 +14,9 @@ function displayImage(fileList) {
   document.getElementById('image-location').style.backgroundImage = "url(" + URL.createObjectURL(file) + ")";
 }
 
-
+/* Form of a Google Cloud Function URL (https://cloud.google.com/functions/docs/calling/http)
+   "https://YOUR_REGION-YOUR_PROJECT_ID.cloudfunctions.net/FUNCTION_NAME"
+*/
 var url = 'https://us-central1-sp19-codeu-35-7727.cloudfunctions.net/testPredict';
 
 function makePrediction(file,url) {

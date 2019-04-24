@@ -43,9 +43,6 @@ function makePrediction(file,url) {
     fetch(url, {
       method: 'POST',
       body: file,
-      headers:{ //Get the content type of the image itself
-        'Content-Type': type(file)
-      }
     })
     .then(function(response) { //Path #1 from fetch call
           let data = response.json();

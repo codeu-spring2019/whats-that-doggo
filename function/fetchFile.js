@@ -1,6 +1,3 @@
-//Javascript
-<script>
-
 //File input
 const fileInput = document.getElementById('file-input');
 fileInput.addEventListener('change', (e) => displayImage(e.target.files)); //files property is a FileList object
@@ -54,4 +51,4 @@ function makePrediction(file,url) {
     });
 
 }
-</script>
+

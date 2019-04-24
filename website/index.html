@@ -63,6 +63,14 @@
 	  <input type="file" accept="image/*" id="file-input" class="uploadFile img" value="Upload Photo" style="width: 0px;height: 0px;overflow: hidden;">
 	</label>
       </div>
+      <div id="prediction-results" style="display: none">
+        <span class="label">Breed: </span><span id="dog-breed" class="score"></span> //Can access with getElementById
+        <span class="label">Confidence: </span><span id="prediction-score" class="score"></span> //Can access with getElementById
+      </div>
+      <div id="prediction-error" style="display: none">
+        <span class="p">ErrorMessage: </span><span id="error-message" class="score"></span> //Can access with getElementById
+      </div>
+
     </div>
   </div>
 

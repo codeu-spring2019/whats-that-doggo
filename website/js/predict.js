@@ -59,7 +59,5 @@ function makePrediction(file, url) {
 
       let errorMessage = document.getElementById("error-message")
       errorMessage.innerText = "Error: " + err.error
-      // let errorDiv = document.getElementById("prediction-error")
-      // errorDiv.style.display = errorDiv.getElementById("error-message")
     })
 }

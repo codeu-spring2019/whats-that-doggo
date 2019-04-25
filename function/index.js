@@ -20,8 +20,9 @@ const modelFullId = client.modelPath(projectId, computeRegion, modelId)
  *                     More info: https://expressjs.com/en/api.html#res
  */
 exports.predict = (req, res, next) => {
+  res.set("Access-Control-Allow-Origin", "*")
+
   if (req.method === "OPTIONS") {
-    res.set("Access-Control-Allow-Origin", "*")
     res.set(
       "Access-Control-Allow-Headers",
       "Accept, Accept-Language, Content-Language, Content-Type"
@@ -129,7 +130,6 @@ function predictImage(req, res, image) {
           score: data[0].classification.score
         }
 
-        res.set("Access-Control-Allow-Origin", "*")
         res
           .status(200)
           .json(result)
